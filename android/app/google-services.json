@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1030172540687",
+    "project_id": "learn-program-a09ff",
+    "storage_bucket": "learn-program-a09ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030172540687:android:9f33554170023865c2887a",
+        "android_client_info": {
+          "package_name": "com.example.laren_program_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030172540687-9u4ghq24lae8ge6t3dc9fdpbd5de3jhl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsg7Pnvid7YUwR2ltPTaDuc462KIuidNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030172540687-9u4ghq24lae8ge6t3dc9fdpbd5de3jhl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
