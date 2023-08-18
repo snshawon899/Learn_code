@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:laren_program_app/model/user_model.dart';
 
 import 'package:laren_program_app/ui/register/login_screen.dart';
+
 import 'package:laren_program_app/ui/screens/c++_code/c++_page.dart';
 import 'package:laren_program_app/ui/screens/flutter_code/flutter_page.dart';
 import 'package:laren_program_app/ui/screens/java_script_code/java_script_page.dart';
@@ -43,6 +44,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 5),
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(
+              userModel.imageUrl.toString(),
+            ),
+          ),
+        ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

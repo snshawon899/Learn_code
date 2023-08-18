@@ -1,9 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:laren_program_app/model/user_model.dart';
 import 'package:laren_program_app/ui/register/login_screen.dart';
+import 'package:laren_program_app/ui/register/profile_image.dart';
+import 'package:laren_program_app/ui/register/add_data.dart';
 
 import '../widgets/button_style.dart';
 import '../widgets/from_widget_screen.dart';
@@ -22,7 +27,9 @@ class _SignUpPageState extends State<SignUpPage> {
   final fromKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   bool isLoader = false;
+  Uint8List? image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,12 +40,27 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Welcome To Sign UP",
-                style: GoogleFonts.poppins(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                ),
+              Stack(
+                children: [
+                  image != null
+                      ? CircleAvatar(
+                          radius: 54,
+                          backgroundImage: MemoryImage(image!),
+                        )
+                      : const CircleAvatar(
+                          radius: 54,
+                          backgroundImage: NetworkImage(
+                              "https://media.istockphoto.com/id/1130884625/vector/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-app-in-circle-design.jpg?s=612x612&w=0&k=20&c=1ky-gNHiS2iyLsUPQkxAtPBWH1BZt0PKBB1WBtxQJRE="),
+                        ),
+                  Positioned(
+                    bottom: -10,
+                    left: 70,
+                    child: IconButton(
+                      onPressed: seleteImage,
+                      icon: const Icon(Icons.add_a_photo),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 15),
               FromFieldWidgets(
@@ -141,23 +163,32 @@ class _SignUpPageState extends State<SignUpPage> {
         setState(() {
           isLoader = false;
         });
-        addDataFirebase();
+        saveProfile();
       }).onError((error, e) {
         print(error);
       });
     }
   }
 
-  Future<void> addDataFirebase() async {
-    User? user = auth.currentUser!;
-    UserModel userModel = UserModel();
-    userModel.uid = user.uid;
-    userModel.email = emailController.text;
-    userModel.name = nameController.text;
+  void saveProfile() async {
+    String name = nameController.text;
+    String email = emailController.text;
 
-    await firestore.collection("users").doc(user.uid).set(
-          userModel.toMap(),
-        );
-    Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
+    await StoreData().saveData(name: name, email: email, file: image!);
+    if (mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const LoginPage(),
+        ),
+      );
+    }
+  }
+
+  seleteImage() async {
+    Uint8List img = await picImage(ImageSource.camera);
+    setState(() {
+      image = img;
+    });
   }
 }

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:laren_program_app/ui/register/signup_page.dart';
+import 'package:laren_program_app/ui/screens/bottom_nav.dart';
 import 'package:laren_program_app/ui/widgets/button_style.dart';
 
 import '../../utils/tost_message.dart';
@@ -141,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
 
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
+            MaterialPageRoute(builder: (context) => const NavBottomBar()),
             (route) => false);
       }).onError((error, stackTrace) {
         setState(() {
